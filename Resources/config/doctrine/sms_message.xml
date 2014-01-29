@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                          http://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <mapped-superclass name="Manyrus\SmsBundle\Lib\SmsMessage">
+
+        <field name="status" column="status" type="string" nullable="false" unique="false" />
+
+        <field name="from" column="from" type="string" nullable="false" unique="false" />
+        <field name="to" column="to" type="string" nullable="false" unique="false" />
+        <field name="message" column="message" type="string" nullable="false" unique="false" />
+
+        <field name="apiType" column="api_type" type="string" nullable="false" unique="false" />
+
+        <field name="messageId" column="message_id" type="string" nullable="false" unique="false" />
+
+        <field name="cost" column="cost" type="float" nullable="false" unique="false" />
+        <field name="isInQueue" column="is_in_queue" type="boolean" nullable="false" unique="false" />
+
+        <field name="created" column="created" type="datetime"/>
+
+        <many-to-one field="error" target-entity="%manyrus_sms.error_entity%" />
+
+    </mapped-superclass>
+
+</doctrine-mapping>
