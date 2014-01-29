@@ -9,10 +9,15 @@
 namespace Manyrus\SmsBundle\Lib\EPochta;
 
 
+use Manyrus\SmsBundle\Lib\ApiErrors;
 use Manyrus\SmsBundle\Lib\ApiType;
 use Manyrus\SmsBundle\Lib\Base\ISmsRepository;
 use Manyrus\SmsBundle\Lib\Base\SmsMerger;
+use Manyrus\SmsBundle\Lib\Entity\ErrorManager;
+use Manyrus\SmsBundle\Lib\Entity\SmsError;
 use Manyrus\SmsBundle\Lib\Entity\SmsMessage;
+use Manyrus\SmsBundle\Lib\SmsException;
+use Manyrus\SmsBundle\Lib\Status;
 
 
 class SmsRepository extends BaseEPochtaRepository implements ISmsRepository{
@@ -27,6 +32,11 @@ class SmsRepository extends BaseEPochtaRepository implements ISmsRepository{
      * @var SmsMerger
      */
     private $smsMerger;
+
+    /**
+     * @var ErrorManager
+     */
+    private $errorManager;
 
     /**
      * @param \Manyrus\SmsBundle\Lib\Base\SmsMerger $smsMerger
@@ -48,11 +58,46 @@ class SmsRepository extends BaseEPochtaRepository implements ISmsRepository{
 
     /**
      * @param SmsMessage $sms
+     * @throws \Manyrus\SmsBundle\Lib\SmsException
      * @return mixed
      */
     public function checkStatus(SmsMessage $sms)
     {
-        // TODO: Implement checkStatus() method.
+        $request = array();
+        $request['id'] = $sms->getMessageId();
+
+        $result = $this->sendRequest($request, self::GET_STATUS);
+
+        if(!empty($result['error'])){
+            if($result['error'] == 'error_invalid_id') {
+                $exception = new SmsException(ApiErrors::BAD_ID, $result['code']);
+            } else {
+                $exception = $this->generateException($result['code']);
+            }
+
+            $sms->setStatus(Status::ERROR);
+            $sms->setError($this->errorManager->generateClass(ApiErrors::BAD_ID));
+
+            throw $exception;
+        }
+
+        $status = $result['result']['status'][0];
+        if($status == '0') {
+            $sms->setStatus(Status::IN_PROCESS);
+        } else if($status == 'SENT') {
+            $sms->setStatus(Status::SENT);
+        } else if($status == 'DELIVERED') {
+            $sms->setStatus(Status::DELIVERED);
+        } else if($status == 'UNDELIVERED') {
+            $sms->setStatus(Status::UNDELIVERED);
+        } elseif($status == 'SPAM') {
+            $sms->setStatus(Status::SPAM);
+        } elseif($status == 'INVALID_PHONE_NUMBER') {
+            $sms->setStatus(Status::ERROR);
+            $sms->setError($this->errorManager->generateClass(ApiErrors::BAD_ADDRESSER));
+        }
+
+        return $sms;
     }
 
     /**

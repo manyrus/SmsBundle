@@ -14,7 +14,7 @@ abstract class SmsError {
 
     private $message;
 
-    function __construct($errorType, $message)
+    function __construct($errorType, $message = null)
     {
         $this->errorType = $errorType;
         $this->message = $message;
