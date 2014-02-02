@@ -11,49 +11,7 @@ namespace Manyrus\SmsBundle\Lib\Base;
 
 abstract class BaseConfig {
     private $from;
-
-    private $max;
-
     private $isTest;
-
-    /**
-     * @var boolean
-     */
-    protected $isQueueMode;
-
-    /**
-     * @param mixed $isQueueMode
-     */
-    public function setIsQueueMode($isQueueMode)
-    {
-        $this->isQueueMode = $isQueueMode;
-    }
-
-
-
-    /**
-     * @return mixed
-     */
-    public function isQueueMode()
-    {
-        return $this->isQueueMode;
-    }
-
-    /**
-     * @param mixed $max
-     */
-    public function setMax($max)
-    {
-        $this->max = $max;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getMax()
-    {
-        return $this->max;
-    }
 
     /**
      * @param mixed $from

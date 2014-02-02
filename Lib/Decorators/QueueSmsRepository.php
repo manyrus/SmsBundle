@@ -6,12 +6,14 @@
  * Time: 20:35
  */
 
-namespace Manyrus\SmsBundle\Lib\Base;
+namespace Manyrus\SmsBundle\Lib\Decorators;
 
 
+use Manyrus\SmsBundle\Lib\Base\ISmsRepository;
+use Manyrus\SmsBundle\Lib\Base\SmsMerger;
 use Manyrus\SmsBundle\Lib\Entity\SmsMessage;
 
-class SmsRepositoryQueueDecorator implements ISmsRepository{
+class QueueSmsRepository implements ISmsRepository{
     /**
      * @var SmsMerger
      */

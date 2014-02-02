@@ -26,7 +26,7 @@ class ManyrusSmsExtension extends Extension
 
         $this->loadSmsGate($config, $loader);
 
-        $this->loadConfig($config, $container, 'manyrus_sms_bundle');
+        $this->loadConfig($config, $container, 'manyrus.sms_bundle');
     }
 
     private function loadConfig($config, ContainerBuilder $container, $root) {
@@ -53,5 +53,8 @@ class ManyrusSmsExtension extends Extension
         } else if($config['api_class'] == 'sms_ru') {
             $loader->load('alias/sms_ru.xml');
         }
+
+        //loading decorators
+        $loader->load('decorators/eventDecorator.xml');
     }
 }

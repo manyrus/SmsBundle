@@ -11,7 +11,7 @@ namespace Manyrus\SmsBundle\Lib\Entity;
 
 class Cost {
     const RUBLE = 'ru';
-
+    const DOLLAR = 'en';
 
     private $currency;
 

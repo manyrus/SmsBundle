@@ -28,32 +28,48 @@ class SmsRepository extends BaseEPochtaRepository implements ISmsRepository{
     const GET_COST = 'checkCampaignPriceGroup';
 
 
-    /**
-     * @var SmsMerger
-     */
-    private $smsMerger;
 
     /**
      * @var ErrorManager
      */
     private $errorManager;
 
-    /**
-     * @param \Manyrus\SmsBundle\Lib\Base\SmsMerger $smsMerger
-     */
-    public function setSmsMerger($smsMerger)
-    {
-        $this->smsMerger = $smsMerger;
-    }
-
 
     /**
      * @param SmsMessage $sms
+     * @throws \Manyrus\SmsBundle\Lib\SmsException
      * @return mixed
      */
     public function send(SmsMessage $sms)
     {
-        $this->smsMerger->merge($sms, $this);
+        $request = array();
+        $request['sender'] = $sms->getFrom();
+        $request['text'] = $sms->getMessage();
+        $request['phone'] = $sms->getTo();
+
+        $result = $this->sendRequest($request, self::SEND_SMS);
+
+        if(!empty($result['error'])) {
+            switch($result['code']) {
+                case 304:
+                    $exception= new SmsException(ApiErrors::LOW_BALANCE, $result['code']);
+                    break;
+                case -1:
+                    $exception= new SmsException(ApiErrors::AUTH_ERROR, $result['code']);
+                    break;
+                case 305:
+                    $exception = new SmsException(ApiErrors::LOW_BALANCE, $result['code']);
+                    break;
+                default:
+                    $exception = $this->generateException($result['code']);
+                    break;
+            }
+
+            throw $exception;
+        }
+        $sms->setMessageId($result['result']['id']);
+
+        return $sms;
     }
 
     /**
@@ -107,7 +123,6 @@ class SmsRepository extends BaseEPochtaRepository implements ISmsRepository{
      */
     public function getCost(SmsMessage $message)
     {
-        $this->smsMerger->merge($message, $this);
 
         $request = array();
         $request['sender'] = $message->getFrom();

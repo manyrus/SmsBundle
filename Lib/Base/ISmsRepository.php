@@ -15,25 +15,25 @@ use Manyrus\SmsBundle\Lib\Entity\SmsMessage;
 interface ISmsRepository {
     /**
      * @param SmsMessage $sms
-     * @return mixed
+     * @return SmsMessage
      */
     public function send(SmsMessage $sms);
 
     /**
      * @param SmsMessage $sms
-     * @return mixed
+     * @return SmsMessage
      */
     public function checkStatus(SmsMessage $sms);
 
     /**
      * @param SmsMessage $sms
-     * @return mixed
+     * @return SmsMessage
      */
     public function getCost(SmsMessage $sms);
 
     /**
      * @see Manyrus\SmsBundle\Lib\ApiType
-     * @return mixed
+     * @return string
      */
     public function getApiType();
 } 

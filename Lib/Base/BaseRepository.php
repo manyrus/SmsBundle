@@ -18,11 +18,6 @@ abstract class BaseRepository {
     protected $buzz;
 
     /**
-     * @var EventDispatcher
-     */
-    protected $eventDispatcher;
-
-    /**
      * @var BaseConfig
      */
     protected $config;
@@ -34,16 +29,6 @@ abstract class BaseRepository {
     {
         $this->config = $config;
     }
-
-
-    /**
-     * @param \Symfony\Component\EventDispatcher\EventDispatcher $eventDispatcher
-     */
-    public function setEventDispatcher($eventDispatcher)
-    {
-        $this->eventDispatcher = $eventDispatcher;
-    }
-
     /**
      * @param mixed $buzz
      */
