@@ -10,7 +10,6 @@ namespace Manyrus\SmsBundle\Lib\Event;
 
 
 use Doctrine\ORM\EntityManager;
-use Manyrus\SmsBundle\Lib\Event\SmsEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class DBSmsSubscriber implements EventSubscriberInterface{

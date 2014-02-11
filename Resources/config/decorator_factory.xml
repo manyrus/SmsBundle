@@ -1,0 +1,24 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+
+    <services>
+
+        <service id="manyrus.sms_bundle.decorator_factory"
+                 class="Manyrus\SmsBundle\Lib\Decorators\DecoratorsFactory">
+            <call method="setUseQueue">
+                <argument>%manyrus.sms_bundle.is_queue_mod%</argument>
+            </call>
+
+            <call method="setContainer">
+                <argument type="service" id="service_container"/>
+            </call>
+        </service>
+    </services>
+
+
+
+</container>

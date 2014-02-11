@@ -55,6 +55,6 @@ class QueueSmsRepository implements ISmsRepository{
      */
     public function getApiType()
     {
-        $this->smsRepository->getApiType();
+        return $this->smsRepository->getApiType();
     }
 }

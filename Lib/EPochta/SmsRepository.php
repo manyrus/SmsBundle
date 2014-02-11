@@ -58,6 +58,9 @@ class SmsRepository extends BaseEPochtaRepository implements ISmsRepository{
                 case 305:
                     $exception = new SmsException(ApiErrors::LOW_BALANCE, $result['code']);
                     break;
+                case 103:
+                    $exception = new SmsException(ApiErrors::LOW_BALANCE, $result['code']);
+                    break;
                 default:
                     $exception = $this->generateException($result['code']);
                     break;

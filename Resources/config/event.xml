@@ -13,8 +13,8 @@
             <tag name="kernel.event_subscriber"/>
         </service>
 
-        <service id="kernel.subscriber.db_sms_subscriber" class="Manyrus\SmsBundle\Lib\Event\MergerSubscriber">
-            <argument type="service" id="doctrine.orm.entity_manager"/>
+        <service id="kernel.subscriber.merger_sms_subscriber" class="Manyrus\SmsBundle\Lib\Event\MergerSubscriber">
+            <argument type="service" id="manyrus.sms_bundle.current.config"/>
             <tag name="kernel.event_subscriber"/>
         </service>
     </services>

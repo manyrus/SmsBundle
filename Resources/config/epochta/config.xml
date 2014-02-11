@@ -6,6 +6,7 @@
 
 
     <services>
+
         <service id="manyrus.sms_bundle.epochta.config"
                  class="Manyrus\SmsBundle\Lib\EPochta\Config"
                  parent="manyrus.sms_bundle.base.config">
@@ -18,25 +19,6 @@
             </call>
 
         </service>
-
-
-
-        <service id="manyrus.sms_bundle.epochta.base_repository"
-                 class="Manyrus\SmsBundle\Lib\EPochta\BaseEPochtaRepository"
-                 parent="manyrus.sms_bundle.base.repository"
-                 public="false"
-                 abstract="true">
-
-            <call method="setConfig">
-                <argument type="service" id="manyrus.sms_bundle.epochta.config"/>
-            </call>
-
-        </service>
-
-        <service id="manyrus.sms_bundle.epochta.sms_repository"
-                 class="Manyrus\SmsBundle\Lib\EPochta\SmsRepository"
-                 parent="manyrus.sms_bundle.epochta.base_repository"
-                 public="true"/>
 
     </services>
 

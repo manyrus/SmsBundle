@@ -21,7 +21,7 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('manyrus_sms_bundle');
 
-        $smsDrivers = array('EPochta', 'sms_ru');
+        $smsDrivers = array('epochta', 'sms_ru');
 
         $rootNode
             ->children()

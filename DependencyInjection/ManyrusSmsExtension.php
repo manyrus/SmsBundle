@@ -60,17 +60,28 @@ class ManyrusSmsExtension extends Extension implements PrependExtensionInterface
 
     private function loadSmsGate($config,\Symfony\Component\Config\Loader\Loader $loader) {
 
-        $loader->load('event.xml');
         $loader->load('base.xml');
-        //$loader->load('checker.xml');
-        $loader->load('epochta.xml');
-        //$loader->load('sms_ru.xml');
-        if($config['api_class'] == 'EPochta') {
-            $loader->load('alias/epochta.xml');
-        } else if($config['api_class'] == 'sms_ru') {
-            $loader->load('alias/sms_ru.xml');
+        $loader->load('decorator_factory.xml');
+
+        $providers = array('epochta');
+        $to_load=array(
+            //'checker.xml',
+            'config.xml',
+            'decorator.xml',
+            'repositories.xml'
+        );
+
+        foreach($providers as $provider) {
+
+            foreach($to_load as $file) {
+                $loader->load($provider.'/'.$file);
+            }
+
+            if($provider === $config['api_class']) {
+                $loader->load($provider.'/alias.xml');
+            }
         }
-        //loading decorators
-        //$loader->load('decorators/eventDecorator.xml');
+
+        $loader->load('event.xml');
     }
 }
