@@ -6,7 +6,7 @@
  * Time: 23:34
  */
 
-namespace Manyrus\SmsBundle\Lib\Entity;
+namespace Manyrus\SmsBundle\Entity;
 
 
 use Doctrine\ORM\Mapping as ORM;
@@ -17,8 +17,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Class Notification
  * @package MaxiBooking\Bundle\NotificationBundle\Entity
- *
  * @ORM\MappedSuperclass
+ * @ORM\HasLifecycleCallbacks
  * @Annotation
  */
 abstract class SmsMessage{
@@ -46,7 +46,7 @@ abstract class SmsMessage{
     private $messageId = 0;
 
     /**
-     * @ORM\ManyToOne(targetEntity="MaxiBooking\Bundle\SmsBundle\Entity\SmsError", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Manyrus\SmsBundle\Entity\SmsError", cascade={"persist"})
      * @ORM\JoinColumn(name="error_id", nullable=true, referencedColumnName="id")
      */
     private $error;

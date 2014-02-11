@@ -9,8 +9,7 @@
 namespace Manyrus\SmsBundle\Lib\Event;
 
 
-use Manyrus\SmsBundle\Lib\Base\SmsMerger;
-use Manyrus\SmsBundle\Lib\Entity\SmsMessage;
+use Manyrus\SmsBundle\Entity\SmsMessage;
 use Manyrus\SmsBundle\Lib\SmsException;
 use Symfony\Component\EventDispatcher\Event;
 

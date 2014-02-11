@@ -6,7 +6,7 @@
  * Time: 21:50
  */
 
-namespace Manyrus\SmsBundle\Lib\Entity;
+namespace Manyrus\SmsBundle\Entity;
 
 
 class ErrorManager {

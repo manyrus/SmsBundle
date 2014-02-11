@@ -8,11 +8,15 @@
     <services>
 
 
-        <service id="kernel.subscriber.db_sms_subscriber" class="Manyrus\SmsBundle\Lib\Event\MergerSubscriber">
+        <service id="kernel.subscriber.db_sms_subscriber" class="Manyrus\SmsBundle\Lib\Event\DBSmsSubscriber">
             <argument type="service" id="doctrine.orm.entity_manager"/>
             <tag name="kernel.event_subscriber"/>
         </service>
 
+        <service id="kernel.subscriber.db_sms_subscriber" class="Manyrus\SmsBundle\Lib\Event\MergerSubscriber">
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <tag name="kernel.event_subscriber"/>
+        </service>
     </services>
 
 </container>

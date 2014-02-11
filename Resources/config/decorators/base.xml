@@ -6,9 +6,11 @@
 
 
     <services>
-        <service id="manyrus.sms_bundle.sms_repository"
+        <service id="manyrus.sms_bundle.decorated.epochta.sms_repository"
                  alias="manyrus.sms_bundle.epochta.sms_repository"/>
 
+        <service id="manyrus.sms_bundle.decorated.sms_repository"
+                 alias="manyrus.sms_bundle.sms_repository"/>
 
     </services>
 

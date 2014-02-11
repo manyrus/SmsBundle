@@ -9,16 +9,10 @@
 namespace Manyrus\SmsBundle\Lib\Decorators;
 
 
+use Manyrus\SmsBundle\Entity\SmsMessage;
 use Manyrus\SmsBundle\Lib\Base\ISmsRepository;
-use Manyrus\SmsBundle\Lib\Base\SmsMerger;
-use Manyrus\SmsBundle\Lib\Entity\SmsMessage;
 
 class QueueSmsRepository implements ISmsRepository{
-    /**
-     * @var SmsMerger
-     */
-    private $smsMerger;
-
     /**
      * @var ISmsRepository
      */
@@ -28,19 +22,9 @@ class QueueSmsRepository implements ISmsRepository{
         $this->smsRepository = $repository;
     }
 
-    /**
-     * @param \Manyrus\SmsBundle\Lib\Base\SmsMerger $smsMerger
-     */
-    public function setSmsMerger($smsMerger)
-    {
-        $this->smsMerger = $smsMerger;
-    }
-
 
 
     public function send(SmsMessage $message) {
-        $this->smsMerger->merge($message, $this);
-
         $message->setIsInQueue(true);
 
         return $message;

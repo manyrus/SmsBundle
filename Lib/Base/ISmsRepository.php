@@ -10,12 +10,14 @@ namespace Manyrus\SmsBundle\Lib\Base;
 
 
 
-use Manyrus\SmsBundle\Lib\Entity\SmsMessage;
+use Manyrus\SmsBundle\Entity\SmsMessage;
+use Manyrus\SmsBundle\Lib\SmsException;
 
 interface ISmsRepository {
     /**
      * @param SmsMessage $sms
      * @return SmsMessage
+     * @throws SmsException
      */
     public function send(SmsMessage $sms);
 

@@ -9,13 +9,11 @@
 namespace Manyrus\SmsBundle\Lib\EPochta;
 
 
+use Manyrus\SmsBundle\Entity\ErrorManager;
+use Manyrus\SmsBundle\Entity\SmsMessage;
 use Manyrus\SmsBundle\Lib\ApiErrors;
 use Manyrus\SmsBundle\Lib\ApiType;
 use Manyrus\SmsBundle\Lib\Base\ISmsRepository;
-use Manyrus\SmsBundle\Lib\Base\SmsMerger;
-use Manyrus\SmsBundle\Lib\Entity\ErrorManager;
-use Manyrus\SmsBundle\Lib\Entity\SmsError;
-use Manyrus\SmsBundle\Lib\Entity\SmsMessage;
 use Manyrus\SmsBundle\Lib\SmsException;
 use Manyrus\SmsBundle\Lib\Status;
 
@@ -68,7 +66,6 @@ class SmsRepository extends BaseEPochtaRepository implements ISmsRepository{
             throw $exception;
         }
         $sms->setMessageId($result['result']['id']);
-
         return $sms;
     }
 

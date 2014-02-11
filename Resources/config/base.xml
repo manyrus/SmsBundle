@@ -6,7 +6,7 @@
 
 
     <services>
-        <service id="manyrus.sms_bundle.base.config" class="Manyrus\SmsBundle\Lib\Base\BaseConfig">
+        <service id="manyrus.sms_bundle.base.config" class="Manyrus\SmsBundle\Lib\Base\BaseConfig" abstract="true" public="false">
             <call method="setFrom">
                 <argument>%manyrus.sms_bundle.from%</argument>
             </call>
@@ -15,13 +15,9 @@
             </call>
         </service>
 
-        <service id="manyrus.sms_bundle.base.repository" class="Manyrus\SmsBundle\Lib\Base\BaseRepository">
+        <service id="manyrus.sms_bundle.base.repository" class="Manyrus\SmsBundle\Lib\Base\BaseRepository" abstract="true" public="false">
             <call method="setBuzz">
                 <argument type="service" id="buzz"/>
-            </call>
-
-            <call method="setConfig">
-                <argument type="service" id="manyrus.sms_bundle.base.config"/>
             </call>
         </service>
     </services>

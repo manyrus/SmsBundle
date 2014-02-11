@@ -6,7 +6,7 @@
  * Time: 20:56
  */
 
-namespace Manyrus\SmsBundle\Lib\Entity;
+namespace Manyrus\SmsBundle\Entity;
 
 
 class Cost {

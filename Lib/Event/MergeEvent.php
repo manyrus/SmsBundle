@@ -9,7 +9,7 @@
 namespace Manyrus\SmsBundle\Lib\Event;
 
 
-use Manyrus\SmsBundle\Lib\Entity\SmsMessage;
+use Manyrus\SmsBundle\Entity\SmsMessage;
 use Symfony\Component\EventDispatcher\Event;
 
 class MergeEvent extends Event{
@@ -38,7 +38,7 @@ class MergeEvent extends Event{
     }
 
     /**
-     * @return \Manyrus\SmsBundle\Lib\Entity\SmsMessage
+     * @return \Manyrus\SmsBundle\Entity\SmsMessage
      */
     public function getMessage()
     {

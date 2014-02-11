@@ -9,8 +9,8 @@
 namespace Manyrus\SmsBundle\Lib\Decorators;
 
 
+use Manyrus\SmsBundle\Entity\SmsMessage;
 use Manyrus\SmsBundle\Lib\Base\ISmsRepository;
-use Manyrus\SmsBundle\Lib\Entity\SmsMessage;
 use Manyrus\SmsBundle\Lib\Event\MergeEvent;
 use Manyrus\SmsBundle\Lib\Event\MergeEvents;
 use Manyrus\SmsBundle\Lib\Event\SmsEvent;
@@ -40,6 +40,7 @@ class EventSmsRepository implements ISmsRepository{
 
     /**
      * @param SmsMessage $sms
+     * @throws \Manyrus\SmsBundle\Lib\SmsException
      * @return mixed
      */
     public function send(SmsMessage $sms)
@@ -54,7 +55,7 @@ class EventSmsRepository implements ISmsRepository{
         } catch(SmsException $e) {
             $event->setException($e);
             $this->eventDispatcher->dispatch(SmsEvents::ERROR_SEND, $event);
-            return $sms;
+            throw $e;
         }
         $this->eventDispatcher->dispatch(SmsEvents::POST_SEND, $event);//with merge
         return $sms;
@@ -66,6 +67,7 @@ class EventSmsRepository implements ISmsRepository{
      */
     public function checkStatus(SmsMessage $sms)
     {
+
         return $this->smsRepository->checkStatus($sms);
     }
 
@@ -75,6 +77,8 @@ class EventSmsRepository implements ISmsRepository{
      */
     public function getCost(SmsMessage $sms)
     {
+        $this->eventDispatcher->dispatch(MergeEvents::ON_MERGE, new MergeEvent($this->getApiType(), $sms));
+
         return $this->smsRepository->getCost($sms);
     }
 

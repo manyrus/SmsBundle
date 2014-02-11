@@ -1,0 +1,45 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+
+    <services>
+        <service id="manyrus.sms_bundle.epochta.config"
+                 class="Manyrus\SmsBundle\Lib\EPochta\Config"
+                 parent="manyrus.sms_bundle.base.config">
+
+            <call method="setPrivateKey">
+                <argument>%manyrus.sms_bundle.EPochta.auth.private_key%</argument>
+            </call>
+            <call method="setPublicKey">
+                <argument>%manyrus.sms_bundle.EPochta.auth.public_key%</argument>
+            </call>
+
+        </service>
+
+
+
+        <service id="manyrus.sms_bundle.epochta.base_repository"
+                 class="Manyrus\SmsBundle\Lib\EPochta\BaseEPochtaRepository"
+                 parent="manyrus.sms_bundle.base.repository"
+                 public="false"
+                 abstract="true">
+
+            <call method="setConfig">
+                <argument type="service" id="manyrus.sms_bundle.epochta.config"/>
+            </call>
+
+        </service>
+
+        <service id="manyrus.sms_bundle.epochta.sms_repository"
+                 class="Manyrus\SmsBundle\Lib\EPochta\SmsRepository"
+                 parent="manyrus.sms_bundle.epochta.base_repository"
+                 public="true"/>
+
+    </services>
+
+
+
+</container>

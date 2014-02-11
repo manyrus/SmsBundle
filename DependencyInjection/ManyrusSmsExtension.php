@@ -4,6 +4,7 @@ namespace Manyrus\SmsBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
 
@@ -12,7 +13,7 @@ use Symfony\Component\DependencyInjection\Loader;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
-class ManyrusSmsExtension extends Extension
+class ManyrusSmsExtension extends Extension implements PrependExtensionInterface
 {
     /**
      * {@inheritDoc}
@@ -41,20 +42,35 @@ class ManyrusSmsExtension extends Extension
         }
     }
 
+    public function prepend(ContainerBuilder $builder) {
+        $bundles = $builder->getParameter("kernel.bundles");
+        $configs = $builder->getExtensionConfig( $this->getAlias() );
+        if(isset($bundles['DoctrineBundle'])) {
+            $config = array(
+                'orm'=>array(
+                    'resolve_target_entities'=>array(
+                        'Manyrus\SmsBundle\Entity\SmsMessage' => $configs[0]['sms_entity'],
+                        'Manyrus\SmsBundle\Entity\SmsError' => $configs[0]['error_entity']
+                    )
+                )
+            );
+            $builder->prependExtensionConfig('doctrine', $config);
+        }
+    }
+
     private function loadSmsGate($config,\Symfony\Component\Config\Loader\Loader $loader) {
 
         $loader->load('event.xml');
         $loader->load('base.xml');
-        $loader->load('checker.xml');
+        //$loader->load('checker.xml');
         $loader->load('epochta.xml');
-        $loader->load('sms_ru.xml');
+        //$loader->load('sms_ru.xml');
         if($config['api_class'] == 'EPochta') {
             $loader->load('alias/epochta.xml');
         } else if($config['api_class'] == 'sms_ru') {
             $loader->load('alias/sms_ru.xml');
         }
-
         //loading decorators
-        $loader->load('decorators/eventDecorator.xml');
+        //$loader->load('decorators/eventDecorator.xml');
     }
 }
