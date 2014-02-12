@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: manyrus
- * Date: 11.02.14
- * Time: 21:42
+ * Date: 12.02.14
+ * Time: 22:10
  */
 
 namespace Manyrus\SmsBundle\Command;
@@ -11,22 +11,18 @@ namespace Manyrus\SmsBundle\Command;
 
 use Doctrine\ORM\EntityRepository;
 use Manyrus\SmsBundle\Entity\SmsMessage;
-use Manyrus\SmsBundle\Lib\ApiType;
-use Manyrus\SmsBundle\Lib\Decorators\ParameterBag;
 use Manyrus\SmsBundle\Lib\SmsException;
 use Manyrus\SmsBundle\Lib\Status;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class SendCommand extends ContainerAwareCommand{
-
-
+class CheckCommand extends ContainerAwareCommand{
     protected function configure()
     {
         $this
-            ->setName('sms:send')
-            ->setDescription('Send in queue sms messages')
+            ->setName('sms:check')
+            ->setDescription('Check sms status')
         ;
     }
 
@@ -36,15 +32,20 @@ class SendCommand extends ContainerAwareCommand{
         $repo = $this->getContainer()->get("doctrine.orm.entity_manager")->getRepository($this->getContainer()->getParameter("manyrus.sms_bundle.sms_entity"));
 
         /** @var SmsMessage[] $messages */
-        $messages = $repo->findBy(array('status'=>Status::IN_QUEUE));
+        $messages = $repo->findBy(array('status'=>Status::IN_PROCESS));
 
         foreach($messages as $sms) {
             $smsRepo = $this->getContainer()->get('manyrus.sms_bundle.sms_repository_factory')->getRepository($sms->getApiType());
             try{
-                $smsRepo->send($sms);
-                $output->writeln("<info>Message #{$sms->getMessageId()} was send</info>");
+                $smsRepo->checkStatus($sms);
+                if($sms->getStatus() !== Status::IN_PROCESS) {
+                    $output->writeln("<info>Message #{$sms->getMessageId()} changed status, now it {$sms->getStatus()}</info>");
+                } else {
+                    $output->writeln("<comment>Message #{$sms->getMessageId()} is in process</comment>");
+                }
+
             } catch(SmsException $e) {
-                $output->writeln("<error>Message #{$sms->getMessageId()} was not send({$e->getError()})</error>");
+                $output->writeln("<error>Message #{$sms->getMessageId()} has errors({$e->getError()})</error>");
             }
         }
     }

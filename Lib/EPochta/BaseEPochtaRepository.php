@@ -42,7 +42,6 @@ abstract class BaseEPochtaRepository extends BaseRepository{
         $params['key'] = $this->config->getPublicKey();
         $params['test'] = (int) $this->config->getIsTest();
         $params['sum'] = $this->generateSum($params);
-
         return json_decode($this->buzz->submit(self::API_URL.$action, $params, RequestInterface::METHOD_GET)->getContent(), true);
 
     }

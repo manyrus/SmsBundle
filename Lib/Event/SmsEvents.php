@@ -22,4 +22,6 @@ final class SmsEvents {
     const PRE_SEND = 'sms.preSend';
 
     const ERROR_SEND = 'sms.errorSend';
+
+    const STATUS_CHANGED = 'sms.statusChanged';
 } 

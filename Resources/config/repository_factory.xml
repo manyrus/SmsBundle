@@ -7,13 +7,13 @@
 
     <services>
 
-        <service id="manyrus.sms_bundle.sms_ru.config"
-                 class="Manyrus\SmsBundle\Lib\SmsRu\Config"
-                 parent="manyrus.sms_bundle.base.config">
+        <service id="manyrus.sms_bundle.sms_repository_factory"
+                 class="Manyrus\SmsBundle\Lib\RepositoryFactory">
 
-            <call method="setKey">
-                <argument>%manyrus.sms_bundle.sms_ru.auth.key%</argument>
+            <call method="setContainer">
+                <argument type="service" id="service_container"/>
             </call>
+
 
         </service>
 

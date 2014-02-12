@@ -28,7 +28,7 @@ abstract class SmsMessage{
      * @ORM\Column(name="status", type="string")
      * @Assert\NotBlank()
      */
-    protected $status = Status::IN_PROCESS;
+    protected $status;
 
 
     /**
@@ -76,35 +76,11 @@ abstract class SmsMessage{
 
 
     /**
-     * @ORM\Column(name="is_in_queue", type="boolean")
-     * @Assert\NotBlank()
-     */
-    protected $isInQueue = false;
-
-
-    /**
      * @var datetime $created
      *
      * @ORM\Column(type="datetime")
      */
     protected $created;
-
-    /**
-     * @param mixed $isInQueue
-     */
-    public function setIsInQueue($isInQueue)
-    {
-        $this->isInQueue = $isInQueue;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getIsInQueue()
-    {
-        return $this->isInQueue;
-    }
-
 
 
     /**

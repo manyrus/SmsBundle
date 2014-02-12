@@ -9,12 +9,21 @@
 
         <service id="manyrus.sms_bundle.decorator_factory"
                  class="Manyrus\SmsBundle\Lib\Decorators\DecoratorsFactory">
-            <call method="setUseQueue">
-                <argument>%manyrus.sms_bundle.is_queue_mod%</argument>
-            </call>
 
             <call method="setContainer">
                 <argument type="service" id="service_container"/>
+            </call>
+        </service>
+
+        <service id="manyrus.sms_bundle.decorator.parameter_bag"
+                class="Manyrus\SmsBundle\Lib\Decorators\ParameterBag"
+                >
+            <call method="useEventMode">
+                <argument>true</argument>
+            </call>
+
+            <call method="useQueueMode">
+                <argument>%manyrus.sms_bundle.is_queue_mod%</argument>
             </call>
         </service>
     </services>

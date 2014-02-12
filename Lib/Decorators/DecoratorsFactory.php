@@ -13,22 +13,12 @@ use Manyrus\SmsBundle\Lib\Base\ISmsRepository;
 use Symfony\Component\DependencyInjection\Container;
 
 class DecoratorsFactory {
-    private $useQueue;
-
-
     /**
      * @var Container
      */
     private $container;
-    /**
-     * @param mixed $useQueue
-     */
-    public function setUseQueue($useQueue)
-    {
-        $this->useQueue = $useQueue;
-    }
 
-    /**
+     /**
      * @param \Symfony\Component\DependencyInjection\Container $container
      */
     public function setContainer($container)
@@ -38,13 +28,16 @@ class DecoratorsFactory {
 
 
 
-    public function createDecorators(ISmsRepository $smsRepository, $queueMode = true) {
-        if($this->useQueue && $queueMode) {
+    public function createDecorators(ISmsRepository $smsRepository, ParameterBag $parameters) {
+
+        if($parameters->isQueueMode()) {
             $smsRepository = new QueueSmsRepository($smsRepository);//TODO: we must first init this. I don't like it, must think about
         }
 
-        $smsRepository = new EventSmsRepository($smsRepository);
-        $smsRepository->setEventDispatcher($this->container->get("event_dispatcher"));
+        if($parameters->isEventMode()) {
+            $smsRepository = new EventSmsRepository($smsRepository);
+            $smsRepository->setEventDispatcher($this->container->get("event_dispatcher"));
+        }
 
         return $smsRepository;
     }

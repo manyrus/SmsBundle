@@ -68,7 +68,9 @@ class SmsRepository extends BaseEPochtaRepository implements ISmsRepository{
 
             throw $exception;
         }
+
         $sms->setMessageId($result['result']['id']);
+        $sms->setStatus(Status::IN_PROCESS);
         return $sms;
     }
 

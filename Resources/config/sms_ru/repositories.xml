@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+
+    <services>
+        <service id="manyrus.sms_bundle.sms_ru.base_repository"
+                 class="Manyrus\SmsBundle\Lib\SmsRu\BaseSmsRuRepository"
+                 parent="manyrus.sms_bundle.base.repository"
+                 public="false"
+                 abstract="true">
+
+            <call method="setConfig">
+                <argument type="service" id="manyrus.sms_bundle.sms_ru.config"/>
+            </call>
+
+        </service>
+
+        <service id="manyrus.sms_bundle.sms_ru.sms_repository"
+                 class="Manyrus\SmsBundle\Lib\SmsRu\SmsRepository"
+                 parent="manyrus.sms_bundle.sms_ru.base_repository"
+                 public="true"/>
+
+    </services>
+
+
+
+</container>

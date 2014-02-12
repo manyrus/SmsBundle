@@ -13,15 +13,9 @@
                  class="Manyrus\SmsBundle\Lib\Base\ISmsRepository"
                 >
             <argument type="service" id="manyrus.sms_bundle.epochta.sms_repository"/>
+            <argument type="service" id="manyrus.sms_bundle.decorator.parameter_bag"/>
         </service>
 
-        <service id="manyrus.sms_bundle.decorated.epochta.sms_repository"
-                 factory-service ="manyrus.sms_bundle.decorator_factory"
-                 factory-method="createDecorators"
-                 class="Manyrus\SmsBundle\Lib\Base\ISmsRepository"
-                >
-            <argument type="service" id="manyrus.sms_bundle.epochta.sms_repository"/>
-        </service>
     </services>
 
 

@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+
+    <services>
+
+        <service id="manyrus.sms_bundle.decorated.sms_ru.sms_repository"
+                 factory-service ="manyrus.sms_bundle.decorator_factory"
+                 factory-method="createDecorators"
+                 class="Manyrus\SmsBundle\Lib\Base\ISmsRepository"
+                >
+            <argument type="service" id="manyrus.sms_bundle.sms_ru.sms_repository"/>
+            <argument type="service" id="manyrus.sms_bundle.decorator.parameter_bag"/>
+        </service>
+
+    </services>
+
+
+
+</container>

@@ -67,8 +67,9 @@ class EventSmsRepository implements ISmsRepository{
      */
     public function checkStatus(SmsMessage $sms)
     {
-
-        return $this->smsRepository->checkStatus($sms);
+        $this->smsRepository->checkStatus($sms);
+        $this->eventDispatcher->dispatch(SmsEvents::STATUS_CHANGED, new SmsEvent($sms));
+        return $sms;
     }
 
     /**

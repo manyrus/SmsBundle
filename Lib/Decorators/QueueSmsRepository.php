@@ -11,6 +11,8 @@ namespace Manyrus\SmsBundle\Lib\Decorators;
 
 use Manyrus\SmsBundle\Entity\SmsMessage;
 use Manyrus\SmsBundle\Lib\Base\ISmsRepository;
+use Manyrus\SmsBundle\Lib\SmsException;
+use Manyrus\SmsBundle\Lib\Status;
 
 class QueueSmsRepository implements ISmsRepository{
     /**
@@ -25,7 +27,11 @@ class QueueSmsRepository implements ISmsRepository{
 
 
     public function send(SmsMessage $message) {
-        $message->setIsInQueue(true);
+        if($message->getStatus() == Status::IN_QUEUE) {
+            $this->smsRepository->send($message);
+        } else {
+            $message->setStatus(Status::IN_QUEUE);
+        }
 
         return $message;
     }

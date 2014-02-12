@@ -16,4 +16,5 @@ abstract class Status {
     const SENT = 'sent';
     const SPAM = 'spam';
     const UNDELIVERED = 'undelivered';
+    const IN_QUEUE = 'in_queue';
 }
