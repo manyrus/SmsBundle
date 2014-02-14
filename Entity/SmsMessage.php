@@ -91,6 +91,8 @@ abstract class SmsMessage{
         $this->created = $created;
     }
 
+    abstract function getId();
+
     /**
      * @return \DateTime
      */

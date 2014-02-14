@@ -15,6 +15,7 @@ use Manyrus\SmsBundle\Lib\SmsException;
 use Manyrus\SmsBundle\Lib\Status;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class CheckCommand extends ContainerAwareCommand{
@@ -23,6 +24,12 @@ class CheckCommand extends ContainerAwareCommand{
         $this
             ->setName('sms:check')
             ->setDescription('Check sms status')
+            ->addOption(
+                'id',
+                null,
+                InputOption::VALUE_REQUIRED,
+                'Message id'
+            )
         ;
     }
 
@@ -31,21 +38,32 @@ class CheckCommand extends ContainerAwareCommand{
         /** @var EntityRepository $repo */
         $repo = $this->getContainer()->get("doctrine.orm.entity_manager")->getRepository($this->getContainer()->getParameter("manyrus.sms_bundle.sms_entity"));
 
+
         /** @var SmsMessage[] $messages */
-        $messages = $repo->findBy(array('status'=>Status::IN_PROCESS));
+        if($input->getOption('id') != null) {
+            $messages = $repo->findBy(array('id'=>$input->getOption('id')));
+        } else {
+            $messages = $repo->findBy(array('status'=>Status::IN_PROCESS));
+        }
+
+
 
         foreach($messages as $sms) {
             $smsRepo = $this->getContainer()->get('manyrus.sms_bundle.sms_repository_factory')->getRepository($sms->getApiType());
             try{
+                if($sms->getStatus() == Status::DELIVERED) {
+                    $output->writeln("<info>Message #{$sms->getId()} is delivered</info>");
+                    break;
+                }
                 $smsRepo->checkStatus($sms);
                 if($sms->getStatus() !== Status::IN_PROCESS) {
-                    $output->writeln("<info>Message #{$sms->getMessageId()} changed status, now it {$sms->getStatus()}</info>");
+                    $output->writeln("<info>Message #{$sms->getId()} changed status, now it {$sms->getStatus()}</info>");
                 } else {
-                    $output->writeln("<comment>Message #{$sms->getMessageId()} is in process</comment>");
+                    $output->writeln("<comment>Message #{$sms->getId()} is in process</comment>");
                 }
 
             } catch(SmsException $e) {
-                $output->writeln("<error>Message #{$sms->getMessageId()} has errors({$e->getError()})</error>");
+                $output->writeln("<error>Message #{$sms->getId()} has errors({$e->getError()})</error>");
             }
         }
     }
