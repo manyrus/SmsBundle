@@ -2,6 +2,7 @@
 
 namespace Manyrus\SmsBundle\DependencyInjection;
 
+use Manyrus\SmsBundle\Lib\ApiType;
 use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -21,26 +22,28 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('manyrus_sms_bundle');
 
-        $smsDrivers = array('epochta', 'sms_ru');
-
         $rootNode
             ->children()
-                ->integerNode("min_rubl")->defaultValue(100)->end()
-                ->booleanNode("is_queue_mod")->defaultValue(false)->end()
-                ->booleanNode("test_mode")->defaultValue(false)->end()
-                ->scalarNode("sms_entity")->isRequired()->end()
-                ->scalarNode("error_entity")->isRequired()->end()
+                ->integerNode("min_balance")->defaultValue(100)->end()
+                ->booleanNode("is_queue_mode")->defaultValue(false)->end()
+                ->booleanNode("is_test_mode")->defaultValue(false)->end()
                 ->scalarNode("from")->end()
-                ->scalarNode("api_class")
+                ->arrayNode('entities')
+                    ->children()
+                        ->scalarNode("sms")->end()
+                        ->scalarNode("error")->end()
+                    ->end()
+                ->end()
+                ->scalarNode("api_type")
                     ->validate()
-                        ->ifNotInArray($smsDrivers)
+                        ->ifNotInArray(ApiType::getApiTypes())
                         ->thenInvalid('Invalid sms gate driver %s')
                     ->end()
                 ->end()
                 ->append($this->loadEpochtaConfig())
                 ->append($this->loadSmsRuConfig())
-        ->end()
             ->end()
+        ->end()
         ;
 
 
@@ -60,12 +63,11 @@ class Configuration implements ConfigurationInterface
 
         $node->children()
             ->arrayNode('auth')
-            ->children()
-            ->scalarNode("key")->defaultValue('')->end()
+                ->children()
+                    ->scalarNode("key")->defaultValue('')->end()
+                ->end()
             ->end()
-            ->end()
-
-            ->end();
+        ->end();
 
         return $node;
     }
@@ -73,17 +75,16 @@ class Configuration implements ConfigurationInterface
 
     private function loadEpochtaConfig() {
         $root = new TreeBuilder();
-        $node = $root->root('EPochta');
+        $node = $root->root('epochta');
 
         $node->children()
             ->arrayNode('auth')
-            ->children()
-            ->scalarNode("private_key")->defaultValue('')->end()
-            ->scalarNode("public_key")->defaultValue('')->end()
+                ->children()
+                    ->scalarNode("private_key")->defaultValue('')->end()
+                    ->scalarNode("public_key")->defaultValue('')->end()
+                ->end()
             ->end()
-            ->end()
-
-            ->end();
+        ->end();
 
         return $node;
     }

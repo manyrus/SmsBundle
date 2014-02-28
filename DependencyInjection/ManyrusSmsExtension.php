@@ -46,16 +46,19 @@ class ManyrusSmsExtension extends Extension implements PrependExtensionInterface
         $bundles = $builder->getParameter("kernel.bundles");
         $configs = $builder->getExtensionConfig( $this->getAlias() );
         if(isset($bundles['DoctrineBundle'])) {
-            $config = array(
+            $doctrineConfig = array(
                 'orm'=>array(
                     'resolve_target_entities'=>array(
-                        'Manyrus\SmsBundle\Entity\SmsMessage' => $configs[0]['sms_entity'],
-                        'Manyrus\SmsBundle\Entity\SmsError' => $configs[0]['error_entity']
+                        'Manyrus\SmsBundle\Entity\SmsMessage' => $configs[0]['entities']['sms'],
+                        'Manyrus\SmsBundle\Entity\SmsError' => $configs[0]['entities']['error']
                     )
                 )
             );
-            $builder->prependExtensionConfig('doctrine', $config);
+            $builder->prependExtensionConfig('doctrine', $doctrineConfig);
+
         }
+        $buzzConfig = array('client_timeout'=>60);
+        $builder->prependExtensionConfig('sensio_buzz', $buzzConfig);
     }
 
     private function loadSmsGate($config,\Symfony\Component\Config\Loader\Loader $loader) {
@@ -77,7 +80,7 @@ class ManyrusSmsExtension extends Extension implements PrependExtensionInterface
                 $loader->load($provider.'/'.$file);
             }
 
-            if($provider === $config['api_class']) {
+            if($provider === $config['api_type']) {
                 $loader->load($provider.'/alias.xml');
             }
         }

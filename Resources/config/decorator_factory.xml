@@ -23,7 +23,7 @@
             </call>
 
             <call method="useQueueMode">
-                <argument>%manyrus.sms_bundle.is_queue_mod%</argument>
+                <argument>%manyrus.sms_bundle.is_queue_mode%</argument>
             </call>
         </service>
     </services>

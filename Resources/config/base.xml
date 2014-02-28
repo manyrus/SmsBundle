@@ -11,7 +11,7 @@
                 <argument>%manyrus.sms_bundle.from%</argument>
             </call>
             <call method="setIsTest">
-                <argument>%manyrus.sms_bundle.test_mode%</argument>
+                <argument>%manyrus.sms_bundle.is_test_mode%</argument>
             </call>
         </service>
 
@@ -22,13 +22,6 @@
         </service>
 
 
-
-        <service id="manyrus.sms_bundle.decorator_factory"
-                 class="Manyrus\SmsBundle\Lib\Decorators\DecoratorsFactory">
-            <call method="setUseQueue">
-                <argument>%manyrus.sms_bundle.is_queue_mod%</argument>
-            </call>
-        </service>
 
 
     </services>
