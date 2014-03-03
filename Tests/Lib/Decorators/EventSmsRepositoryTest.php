@@ -202,6 +202,8 @@ class EventSmsRepositoryTest extends DecoratorsTest{
     }
 
     public function testUpdateStatus() {
+        $obj = $this;
+
         $sms = $this->getSmsMessage();
         $sms->setStatus(Status::IN_PROCESS);
 
@@ -225,8 +227,8 @@ class EventSmsRepositoryTest extends DecoratorsTest{
             ->with($this->equalTo(SmsEvents::SMS_CHANGED)
                 , $this->isInstanceOf('Manyrus\SmsBundle\Lib\Event\SmsEvent'))
             ->will($this->returnCallback(
-                function($name,SmsEvent $smsEvent) use($sms){
-                    $this->assertEquals($smsEvent->getMessage(), $sms);
+                function($name,SmsEvent $smsEvent) use($sms, $obj){
+                    $obj->assertEquals($smsEvent->getMessage(), $sms);
                 }
             ))
         ;
