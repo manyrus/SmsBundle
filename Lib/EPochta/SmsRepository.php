@@ -14,6 +14,7 @@ use Manyrus\SmsBundle\Entity\SmsMessage;
 use Manyrus\SmsBundle\Lib\ApiErrors;
 use Manyrus\SmsBundle\Lib\ApiType;
 use Manyrus\SmsBundle\Lib\Base\ISmsRepository;
+use Manyrus\SmsBundle\Lib\EntityCreator;
 use Manyrus\SmsBundle\Lib\SmsException;
 use Manyrus\SmsBundle\Lib\Status;
 
@@ -28,9 +29,9 @@ class SmsRepository extends BaseEPochtaRepository implements ISmsRepository{
 
 
     /**
-     * @var ErrorManager
+     * @var EntityCreator
      */
-    private $errorManager;
+    private $entityCreator;
 
 
     /**
@@ -94,7 +95,7 @@ class SmsRepository extends BaseEPochtaRepository implements ISmsRepository{
             }
 
             $sms->setStatus(Status::ERROR);
-            $sms->setError($this->errorManager->generateClass(ApiErrors::BAD_ID));
+            $sms->setError($this->entityCreator->g(ApiErrors::BAD_ID));
 
             throw $exception;
         }
@@ -112,7 +113,7 @@ class SmsRepository extends BaseEPochtaRepository implements ISmsRepository{
             $sms->setStatus(Status::SPAM);
         } elseif($status == 'INVALID_PHONE_NUMBER') {
             $sms->setStatus(Status::ERROR);
-            $sms->setError($this->errorManager->generateClass(ApiErrors::BAD_ADDRESSER));
+            $sms->setError($this->entityCreator->generateClass(ApiErrors::BAD_ADDRESSER));
         }
 
         return $sms;

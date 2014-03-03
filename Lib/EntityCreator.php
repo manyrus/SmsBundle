@@ -11,7 +11,7 @@ namespace Manyrus\SmsBundle\Lib;
 
 use Manyrus\SmsBundle\Entity\SmsError;
 use Manyrus\SmsBundle\Entity\SmsMessage;
-use Symfony\Component\Validator\Exception\RuntimeException;
+use \RuntimeException;
 
 class EntityCreator {
     private $smsClass;

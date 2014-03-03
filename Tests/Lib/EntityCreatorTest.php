@@ -21,4 +21,18 @@ class EntityCreatorTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($smsError, $entityCreator->createError());
         $this->assertEquals($smsMessage, $entityCreator->createSms());
     }
+
+    public function testException() {
+        $smsMessage = $this->getMock('Manyrus\SmsBundle\Entity\SmsMessage');
+
+        $this->setExpectedException('\RuntimeException');
+        new EntityCreator('Manyrus\SmsBundle\Entity\SmsError', $smsMessage);
+    }
+
+    public function testException2() {
+        $smsError = $this->getMock('Manyrus\SmsBundle\Entity\SmsError');
+
+        $this->setExpectedException('\RuntimeException');
+        new EntityCreator($smsError, 'Manyrus\SmsBundle\Entity\SmsMessage');
+    }
 } 
