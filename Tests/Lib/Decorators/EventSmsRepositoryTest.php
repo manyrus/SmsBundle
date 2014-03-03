@@ -24,6 +24,8 @@ class EventSmsRepositoryTest extends DecoratorsTest{
 
 
     public function testSend() {
+        $obj = $this;
+
         $sms = $this->getSmsMessage();
         $smsRepository = $this->getMockForAbstractClass('Manyrus\SmsBundle\Lib\Base\ISmsRepository');
 
@@ -50,9 +52,9 @@ class EventSmsRepositoryTest extends DecoratorsTest{
             ->with($this->equalTo(MergeEvents::ON_MERGE)
                 , $this->isInstanceOf('Manyrus\SmsBundle\Lib\Event\MergeEvent'))
             ->will($this->returnCallback(
-                function($name,MergeEvent $mergeEvent) use($sms){
-                    $this->assertEquals($mergeEvent->getMessage(), $sms);
-                    $this->assertEquals(ApiType::EPOCHTA_API, $mergeEvent->getApiType());
+                function($name,MergeEvent $mergeEvent) use($sms, $obj){
+                    $obj->assertEquals($mergeEvent->getMessage(), $sms);
+                    $obj->assertEquals(ApiType::EPOCHTA_API, $mergeEvent->getApiType());
                 }
             ))
         ;
@@ -62,8 +64,8 @@ class EventSmsRepositoryTest extends DecoratorsTest{
             ->method('dispatch')
             ->with($this->equalTo(SmsEvents::PRE_SEND)
             , $this->isInstanceOf('Manyrus\SmsBundle\Lib\Event\SmsEvent'))
-            ->will($this->returnCallback(function($name, SmsEvent $event) use ($sms){
-                $this->assertEquals($event->getMessage(), $sms);
+            ->will($this->returnCallback(function($name, SmsEvent $event) use ($sms, $obj){
+                $obj->assertEquals($event->getMessage(), $sms);
             }))
         ;
 
@@ -72,8 +74,8 @@ class EventSmsRepositoryTest extends DecoratorsTest{
             ->method('dispatch')
             ->with($this->equalTo(SmsEvents::POST_SEND)
                 , $this->isInstanceOf('Manyrus\SmsBundle\Lib\Event\SmsEvent'))
-            ->will($this->returnCallback(function($name, SmsEvent $event) use ($sms){
-                $this->assertEquals($event->getMessage(), $sms);
+            ->will($this->returnCallback(function($name, SmsEvent $event) use ($sms, $obj){
+                $obj->assertEquals($event->getMessage(), $sms);
             }));
 
 
@@ -88,6 +90,7 @@ class EventSmsRepositoryTest extends DecoratorsTest{
     }
 
     public function testErrorSend() {
+        $obj = $this;
         $sms = $this->getSmsMessage();
         $smsRepository = $this->getMockForAbstractClass('Manyrus\SmsBundle\Lib\Base\ISmsRepository');
 
@@ -121,7 +124,7 @@ class EventSmsRepositoryTest extends DecoratorsTest{
             ->method('dispatch')
             ->with($this->equalTo(SmsEvents::ERROR_SEND)
                 , $this->isInstanceOf('Manyrus\SmsBundle\Lib\Event\SmsEvent'))
-            ->will($this->returnCallback(function($name,SmsEvent $event) {$this->assertNotNull($event->getException());}))
+            ->will($this->returnCallback(function($name,SmsEvent $event) use ($obj){$obj->assertNotNull($event->getException());}))
         ;
 
         $this->setExpectedException('Manyrus\SmsBundle\Lib\SmsException');
@@ -133,6 +136,8 @@ class EventSmsRepositoryTest extends DecoratorsTest{
     }
 
     public function testUpdateCost() {
+        $obj = $this;
+
         $sms = $this->getSmsMessage();
         $sms->setCost(0);
 
@@ -160,9 +165,9 @@ class EventSmsRepositoryTest extends DecoratorsTest{
             ->with($this->equalTo(MergeEvents::ON_MERGE)
                 , $this->isInstanceOf('Manyrus\SmsBundle\Lib\Event\MergeEvent'))
             ->will($this->returnCallback(
-                function($name,MergeEvent $mergeEvent) use($sms){
-                    $this->assertEquals($mergeEvent->getMessage(), $sms);
-                    $this->assertEquals(ApiType::EPOCHTA_API, $mergeEvent->getApiType());
+                function($name,MergeEvent $mergeEvent) use($sms, $obj){
+                    $obj->assertEquals($mergeEvent->getMessage(), $sms);
+                    $obj->assertEquals(ApiType::EPOCHTA_API, $mergeEvent->getApiType());
                 }
             ))
         ;
@@ -173,8 +178,8 @@ class EventSmsRepositoryTest extends DecoratorsTest{
             ->with($this->equalTo(SmsEvents::SMS_CHANGED)
                 , $this->isInstanceOf('Manyrus\SmsBundle\Lib\Event\SmsEvent'))
             ->will($this->returnCallback(
-                function($name,SmsEvent $smsEvent) use($sms){
-                    $this->assertEquals($smsEvent->getMessage(), $sms);
+                function($name,SmsEvent $smsEvent) use($sms, $obj){
+                    $obj->assertEquals($smsEvent->getMessage(), $sms);
                 }
             ))
         ;
