@@ -50,7 +50,7 @@ class SmsRepositoryMock {
         } else {
             $with->will($this->test->returnCallback(
                 function(SmsMessage $m) {
-                    throw new SmsException(SmsRepositoryMock::API_ERROR, self::API_ERROR);
+                    throw new SmsException(SmsRepositoryMock::API_ERROR, SmsRepositoryMock::API_ERROR);
                 }
             ));
         }

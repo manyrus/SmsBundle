@@ -11,6 +11,7 @@ namespace Manyrus\SmsBundle\Lib;
 
 use Manyrus\SmsBundle\Entity\SmsError;
 use Manyrus\SmsBundle\Entity\SmsMessage;
+use Symfony\Component\Validator\Exception\RuntimeException;
 
 class EntityCreator {
     private $smsClass;
@@ -19,6 +20,9 @@ class EntityCreator {
 
     function __construct($errorClass, $smsClass)
     {
+        if(!is_subclass_of($errorClass, 'Manyrus\SmsBundle\Entity\SmsError') || !is_subclass_of($smsClass, 'Manyrus\SmsBundle\Entity\SmsMessage')) {
+            throw new RuntimeException('Bad parameters');
+        }
         $this->errorClass = $errorClass;
         $this->smsClass = $smsClass;
     }
