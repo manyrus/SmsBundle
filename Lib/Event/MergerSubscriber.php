@@ -23,15 +23,15 @@ class MergerSubscriber implements EventSubscriberInterface {
 
     function __construct(BaseConfig $config)
     {
-       $this->config = $config;
+        $this->config = $config;
     }
 
     public function merge(MergeEvent $event) {
         $message = $event->getMessage();
-
         if($message->getFrom() == null) {
             $message->setFrom($this->config->getFrom());
         }
+
         $message->setApiType($event->getApiType());
     }
 

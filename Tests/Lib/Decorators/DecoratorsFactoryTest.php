@@ -42,10 +42,7 @@ class DecoratorsFactoryTest extends \PHPUnit_Framework_TestCase {
     public function testEventCreateDecorators() {
         $this->parameterBag->useEventMode(true);
 
-        $this->container->expects($this->once())
-            ->method('get')
-            ->with($this->equalTo('event_dispatcher'))
-            ->will($this->returnValue($this->eventDispatcher));
+        $this->generateContainer($this->once());
 
         $eventRepository = $this->factory->createDecorators($this->smsRepository, $this->parameterBag);
         $this->assertInstanceOf('Manyrus\SmsBundle\Lib\Decorators\EventSmsRepository', $eventRepository);
@@ -58,10 +55,7 @@ class DecoratorsFactoryTest extends \PHPUnit_Framework_TestCase {
     public function testQueueCreateDecorators() {
         $this->parameterBag->useQueueMode(true);
 
-        $this->container->expects($this->once())
-            ->method('get')
-            ->with($this->equalTo('event_dispatcher'))
-            ->will($this->returnValue($this->eventDispatcher));
+        $this->generateContainer($this->once());
 
         $eventRepository = $this->factory->createDecorators($this->smsRepository, $this->parameterBag);
         $this->assertInstanceOf('Manyrus\SmsBundle\Lib\Decorators\QueueSmsRepository', $eventRepository);
@@ -69,6 +63,13 @@ class DecoratorsFactoryTest extends \PHPUnit_Framework_TestCase {
         $this->parameterBag->useEventMode(true);//event&&queue
         $eventRepository = $this->factory->createDecorators($this->smsRepository, $this->parameterBag);
         $this->assertInstanceOf('Manyrus\SmsBundle\Lib\Decorators\EventSmsRepository', $eventRepository);
+    }
+
+    private function generateContainer($expects) {
+        $this->container->expects($expects)
+            ->method('get')
+            ->with($this->equalTo('event_dispatcher'))
+            ->will($this->returnValue($this->eventDispatcher));
     }
 }
  

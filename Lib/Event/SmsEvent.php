@@ -27,6 +27,7 @@ class SmsEvent extends Event{
     function __construct($message, $exception = null)
     {
         $this->message = $message;
+        $this->exception = $exception;
     }
 
     /**

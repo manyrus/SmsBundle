@@ -31,15 +31,7 @@ class DBSmsSubscriber implements EventSubscriberInterface{
     /**
      * @param SmsEvent $event
      */
-    public function afterSend(SmsEvent $event) {
-        $this->manager->persist($event->getMessage());
-        $this->manager->flush();
-    }
-
-    /**
-     * @param SmsEvent $event
-     */
-    public function onError(SmsEvent $event) {
+    public function flush(SmsEvent $event) {
         $this->manager->persist($event->getMessage());
         $this->manager->flush();
     }
@@ -67,9 +59,9 @@ class DBSmsSubscriber implements EventSubscriberInterface{
     public static function getSubscribedEvents()
     {
         return array(
-            SmsEvents::POST_SEND => 'afterSend',
-            SmsEvents::ERROR_SEND => 'onError',
-            SmsEvents::SMS_CHANGED=>'afterSend'
+            SmsEvents::POST_SEND => 'flush',
+            SmsEvents::ERROR_SEND => 'flush',
+            SmsEvents::SMS_CHANGED=>'flush'
         );
     }
 }

@@ -10,31 +10,39 @@ namespace Manyrus\SmsBundle\Tests\Lib\Decorators;
 
 
 use Manyrus\SmsBundle\Entity\SmsMessage;
-use Manyrus\SmsBundle\Lib\ApiType;
 use Manyrus\SmsBundle\Lib\Base\ISmsRepository;
-use Manyrus\SmsBundle\Lib\Status;
+use Manyrus\SmsBundle\Tests\MockGenerators\SmsRepositoryMock;
 
 abstract class DecoratorsTest  extends \PHPUnit_Framework_TestCase{
     /**
-     * @return SmsMessage
+     * @var SmsMessage
      */
-    protected  function getSmsMessage() {
-        return $this->getMockForAbstractClass('Manyrus\SmsBundle\Entity\SmsMessage');
+    public $smsMessage;
+
+    /**
+     * @var ISmsRepository
+     */
+    public $smsRepository;
+
+
+    /**
+     * @var SmsRepositoryMock
+     */
+    public $smsRepositoryGen;
+
+    protected function setUp() {
+        $this->smsMessage = $this->getMockForAbstractClass('Manyrus\SmsBundle\Entity\SmsMessage');
+        $this->smsRepository = $this->getMockForAbstractClass('Manyrus\SmsBundle\Lib\Base\ISmsRepository');
+        $this->smsRepositoryGen = new SmsRepositoryMock($this);
     }
 
     public function testApiType() {
-        $mock = $this->getMockForAbstractClass('Manyrus\SmsBundle\Lib\Base\ISmsRepository');;
-
-        $mock->expects($this->once())
-            ->method('getApiType')
-            ->will($this->returnValue(ApiType::EPOCHTA_API)
-            );
-
+        $this->smsRepositoryGen->apiTypeMethod($this->once());
         $class = $this->getClassName();
         /** @var ISmsRepository $test */
-        $test = new $class($mock);
+        $test = new $class($this->smsRepository);
 
-        $this->assertEquals($test->getApiType(), ApiType::EPOCHTA_API);
+        $this->assertEquals($test->getApiType(), SmsRepositoryMock::API_TYPE);
     }
 
     abstract protected function getClassName();
