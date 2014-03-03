@@ -43,14 +43,14 @@ class SmsRepositoryMock {
         if(!$exception) {
             $with->will($this->test->returnCallback(
                 function(SmsMessage $m) {
-                    $m->setStatus(self::SEND_STATUS);
-                    $m->setMessageId(self::MESSAGE_ID);
+                    $m->setStatus(SmsRepositoryMock::SEND_STATUS);
+                    $m->setMessageId(SmsRepositoryMock::MESSAGE_ID);
                 }
             ));
         } else {
             $with->will($this->test->returnCallback(
                 function(SmsMessage $m) {
-                    throw new SmsException(self::API_ERROR, self::API_ERROR);
+                    throw new SmsException(SmsRepositoryMock::API_ERROR, self::API_ERROR);
                 }
             ));
         }
@@ -62,7 +62,7 @@ class SmsRepositoryMock {
             ->with($this->test->isInstanceOf('Manyrus\SmsBundle\Entity\SmsMessage'))
             ->will($this->test->returnCallback(
                 function(SmsMessage $m) {
-                    $m->setStatus(self::UPDATE_STATUS);
+                    $m->setStatus(SmsRepositoryMock::UPDATE_STATUS);
                 }
             ));
     }
@@ -73,7 +73,7 @@ class SmsRepositoryMock {
             ->with($this->test->isInstanceOf('Manyrus\SmsBundle\Entity\SmsMessage'))
             ->will($this->test->returnCallback(
                 function(SmsMessage $m) {
-                    $m->setCost(self::COST);
+                    $m->setCost(SmsRepositoryMock::COST);
                 }
             ));
     }
@@ -81,6 +81,6 @@ class SmsRepositoryMock {
     public function apiTypeMethod($excepts) {
         $this->test->smsRepository->expects($excepts)
             ->method('getApiType')
-            ->will($this->test->returnValue(self::API_TYPE));
+            ->will($this->test->returnValue(SmsRepositoryMock::API_TYPE));
     }
 } 
