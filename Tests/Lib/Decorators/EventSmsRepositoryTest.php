@@ -24,7 +24,7 @@ class EventSmsRepositoryTest extends DecoratorsTest{
 
 
     public function testSend() {
-        $obj = $this;
+        $obj = $this;//php 5.3 support
 
         $sms = $this->getSmsMessage();
         $smsRepository = $this->getMockForAbstractClass('Manyrus\SmsBundle\Lib\Base\ISmsRepository');
