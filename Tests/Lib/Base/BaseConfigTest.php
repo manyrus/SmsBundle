@@ -6,7 +6,7 @@
  * Time: 18:17
  */
 
-namespace Manyrus\SmsBundle\Tests\Base;
+namespace Manyrus\SmsBundle\Tests\Lib\Base;
 
 
 use Manyrus\SmsBundle\Lib\Base\BaseConfig;

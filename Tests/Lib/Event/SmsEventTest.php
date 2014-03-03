@@ -6,7 +6,7 @@
  * Time: 18:27
  */
 
-namespace Manyrus\SmsBundle\Tests\Event;
+namespace Manyrus\SmsBundle\Tests\Lib\Event;
 
 
 use Manyrus\SmsBundle\Entity\SmsMessage;

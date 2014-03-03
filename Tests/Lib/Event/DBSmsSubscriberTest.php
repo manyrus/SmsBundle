@@ -6,7 +6,7 @@
  * Time: 19:49
  */
 
-namespace Manyrus\SmsBundle\Tests\Event;
+namespace Manyrus\SmsBundle\Tests\Lib\Event;
 
 
 use Doctrine\ORM\EntityManager;
