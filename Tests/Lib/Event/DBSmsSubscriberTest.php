@@ -45,12 +45,13 @@ class DBSmsSubscriberTest extends \PHPUnit_Framework_TestCase{
 
     public function testPersist() {
         $self = $this;
+        $msg = $this->smsMessage;
         $this->manager->expects($this->at(0))
             ->method('persist')
             ->with($this->isInstanceOf('Manyrus\SmsBundle\Entity\SmsMessage'))
             ->will($this->returnCallback(
-                function(SmsMessage $sms) use($self){
-                    $self->assertEquals($sms, $self->smsMessage);
+                function(SmsMessage $sms) use($self, $msg){
+                    $self->assertEquals($sms, $msg);
                 }
             ));
 
