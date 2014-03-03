@@ -79,7 +79,7 @@ class SmsRepository extends BaseEPochtaRepository implements ISmsRepository{
      * @throws \Manyrus\SmsBundle\Lib\SmsException
      * @return mixed
      */
-    public function checkStatus(SmsMessage $sms)
+    public function updateStatus(SmsMessage $sms)
     {
         $request = array();
         $request['id'] = $sms->getMessageId();
@@ -123,7 +123,7 @@ class SmsRepository extends BaseEPochtaRepository implements ISmsRepository{
      * @throws \Manyrus\SmsBundle\Lib\SmsException
      * @return mixed
      */
-    public function getCost(SmsMessage $message)
+    public function updateCost(SmsMessage $message)
     {
 
         $request = array();

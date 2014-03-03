@@ -23,5 +23,5 @@ final class SmsEvents {
 
     const ERROR_SEND = 'sms.errorSend';
 
-    const STATUS_CHANGED = 'sms.statusChanged';
+    const SMS_CHANGED = 'sms.smsChanged';
 } 

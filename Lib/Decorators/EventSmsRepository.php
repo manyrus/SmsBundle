@@ -65,10 +65,13 @@ class EventSmsRepository implements ISmsRepository{
      * @param SmsMessage $sms
      * @return mixed
      */
-    public function checkStatus(SmsMessage $sms)
+    public function updateStatus(SmsMessage $sms)
     {
-        $this->smsRepository->checkStatus($sms);
-        $this->eventDispatcher->dispatch(SmsEvents::STATUS_CHANGED, new SmsEvent($sms));
+        $previousStatus = $sms->getStatus();
+        $this->smsRepository->updateStatus($sms);
+        if($previousStatus != $sms->getStatus()) {
+            $this->eventDispatcher->dispatch(SmsEvents::SMS_CHANGED, new SmsEvent($sms));
+        }
         return $sms;
     }
 
@@ -76,11 +79,15 @@ class EventSmsRepository implements ISmsRepository{
      * @param SmsMessage $sms
      * @return mixed
      */
-    public function getCost(SmsMessage $sms)
+    public function updateCost(SmsMessage $sms)
     {
         $this->eventDispatcher->dispatch(MergeEvents::ON_MERGE, new MergeEvent($this->getApiType(), $sms));
-
-        return $this->smsRepository->getCost($sms);
+        $previousCost = $sms->getCost();
+        $this->smsRepository->updateCost($sms);
+        if($previousCost != $sms->getCost()) {
+            $this->eventDispatcher->dispatch(SmsEvents::SMS_CHANGED, new SmsEvent($sms));
+        }
+        return $sms;
     }
 
     /**

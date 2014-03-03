@@ -70,5 +70,7 @@ abstract class SmsError {
         return $this->message;
     }
 
+    abstract public function getId();
+
 
 } 

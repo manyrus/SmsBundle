@@ -66,6 +66,7 @@ class ManyrusSmsExtension extends Extension implements PrependExtensionInterface
         $loader->load('base.xml');
         $loader->load('decorator_factory.xml');
         $loader->load('repository_factory.xml');
+        $loader->load('entity_creator.xml');
         $providers = array('epochta', 'sms_ru');
         $to_load=array(
             //'checker.xml',

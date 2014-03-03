@@ -25,13 +25,13 @@ interface ISmsRepository {
      * @param SmsMessage $sms
      * @return SmsMessage
      */
-    public function checkStatus(SmsMessage $sms);
+    public function updateStatus(SmsMessage $sms);
 
     /**
      * @param SmsMessage $sms
      * @return SmsMessage
      */
-    public function getCost(SmsMessage $sms);
+    public function updateCost(SmsMessage $sms);
 
     /**
      * @see Manyrus\SmsBundle\Lib\ApiType

@@ -36,7 +36,7 @@ class CheckCommand extends ContainerAwareCommand{
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         /** @var EntityRepository $repo */
-        $repo = $this->getContainer()->get("doctrine.orm.entity_manager")->getRepository($this->getContainer()->getParameter("manyrus.sms_bundle.sms_entity"));
+        $repo = $this->getContainer()->get("doctrine.orm.entity_manager")->getRepository($this->getContainer()->getParameter("manyrus.sms_bundle.entities.sms"));
 
 
         /** @var SmsMessage[] $messages */

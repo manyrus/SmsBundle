@@ -52,9 +52,8 @@ class SendCommand extends ContainerAwareCommand{
         /** @var DialogHelper $dialog */
         $dialog = $this->getHelperSet()->get('dialog');
 
-        $class = $this->getContainer()->getParameter('manyrus.sms_bundle.sms_entity');
-        /** @var SmsMessage $sms */
-        $sms =new $class();
+        $sms = $this->getContainer()->get('manyrus.sms_bundle.entity_creator')->createSms();
+
 
         if($input->getOption('from') == null) {
             $default = $this->getContainer()->getParameter('manyrus.sms_bundle.from');

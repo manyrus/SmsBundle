@@ -41,18 +41,18 @@ class QueueSmsRepository implements ISmsRepository{
      * @param SmsMessage $sms
      * @return mixed
      */
-    public function checkStatus(SmsMessage $sms)
+    public function updateStatus(SmsMessage $sms)
     {
-        return $this->smsRepository->checkStatus($sms);
+        return $this->smsRepository->updateStatus($sms);
     }
 
     /**
      * @param SmsMessage $sms
      * @return mixed
      */
-    public function getCost(SmsMessage $sms)
+    public function updateCost(SmsMessage $sms)
     {
-        return $this->smsRepository->getCost($sms);
+        return $this->smsRepository->updateCost($sms);
     }
 
     /**

@@ -43,7 +43,7 @@ abstract class SmsMessage{
      *
      * @ORM\Column(name="api_message_id", type="string")
      */
-    private $messageId = 0;
+    private $messageId;
 
     /**
      * @ORM\ManyToOne(targetEntity="Manyrus\SmsBundle\Entity\SmsError", cascade={"persist"})
@@ -83,15 +83,28 @@ abstract class SmsMessage{
     protected $created;
 
 
-    /**
-     * @param \DateTime $created
-     */
-    public function setCreated($created)
-    {
-        $this->created = $created;
-    }
+
 
     abstract function getId();
+
+    /**
+     * @param float $cost
+     */
+    public function setCost($cost)
+    {
+        $this->cost = $cost;
+    }
+
+    /**
+     * @return float
+     */
+    public function getCost()
+    {
+        return $this->cost;
+    }
+
+
+
 
     /**
      * @return \DateTime
@@ -184,22 +197,6 @@ abstract class SmsMessage{
     public function getError()
     {
         return $this->error;
-    }
-
-    /**
-     * @param mixed $cost
-     */
-    public function setCost($cost)
-    {
-        $this->cost = $cost;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCost()
-    {
-        return $this->cost;
     }
 
 

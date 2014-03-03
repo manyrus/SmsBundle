@@ -77,7 +77,7 @@ class SmsRepository extends BaseSmsRuRepository implements ISmsRepository{
      * @throws \Manyrus\SmsBundle\Lib\SmsException
      * @return SmsMessage
      */
-    public function checkStatus(SmsMessage $sms)
+    public function updateStatus(SmsMessage $sms)
     {
         if($sms->getMessageId() == '000-00000') {//для тестовых смс
             $sms->setStatus(Status::DELIVERED);
@@ -110,7 +110,7 @@ class SmsRepository extends BaseSmsRuRepository implements ISmsRepository{
      * @throws \Manyrus\SmsBundle\Lib\SmsException
      * @return SmsMessage
      */
-    public function getCost(SmsMessage $sms)
+    public function updateCost(SmsMessage $sms)
     {
         $request['to'] = $sms->getTo();
         $request['text'] = $sms->getMessage();

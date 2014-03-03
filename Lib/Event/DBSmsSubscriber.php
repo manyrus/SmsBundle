@@ -69,7 +69,7 @@ class DBSmsSubscriber implements EventSubscriberInterface{
         return array(
             SmsEvents::POST_SEND => 'afterSend',
             SmsEvents::ERROR_SEND => 'onError',
-            SmsEvents::STATUS_CHANGED=>'afterSend'
+            SmsEvents::SMS_CHANGED=>'afterSend'
         );
     }
 }
