@@ -1,4 +1,4 @@
-ManyrusUserBundle
+ManyrusSmsBundle
 =================
 
 The ManyrusSmsBundle add support for sms delivery in symfony 2.
