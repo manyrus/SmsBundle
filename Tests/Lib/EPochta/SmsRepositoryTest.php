@@ -46,11 +46,19 @@ class SmsRepositoryTest extends \PHPUnit_Framework_TestCase{
     }
 
     public function testSend() {
+        $self =$this;
         $this->config->setPrivateKey('manyrus');
 
         $this->buzz->expects($this->once())
             ->method('submit')
-            ->will($this->returnCallback(function(){var_dump(func_num_args());}));
+            ->will($this->returnCallback(function() use($self){
+                //var_dump(func_get_args());
+                $mock = $self->getMockForAbstractClass('Buzz\Message\MessageInterface');
+                $mock->expects($self->once())
+                    ->method('getContent')
+                    ->will($this->returnValue('{heelo:true}'));
+                return $mock;
+            }));
 
         $this->repo->send($this->smsMessage);
     }
