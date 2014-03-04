@@ -17,18 +17,7 @@ abstract class BaseRepository {
      */
     protected $buzz;
 
-    /**
-     * @var BaseConfig
-     */
-    protected $config;
 
-    /**
-     * @param \Manyrus\SmsBundle\Lib\Base\BaseConfig $config
-     */
-    public function setConfig($config)
-    {
-        $this->config = $config;
-    }
     /**
      * @param mixed $buzz
      */
