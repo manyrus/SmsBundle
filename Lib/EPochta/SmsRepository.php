@@ -36,6 +36,7 @@ class SmsRepository extends BaseEPochtaRepository implements ISmsRepository{
 
     /**
      * @param SmsMessage $sms
+     * @throws \RuntimeException
      * @throws \Manyrus\SmsBundle\Lib\SmsException
      * @return mixed
      */
@@ -46,15 +47,16 @@ class SmsRepository extends BaseEPochtaRepository implements ISmsRepository{
         $request['text'] = $sms->getMessage();
         $request['phone'] = $sms->getTo();
 
+        if(in_array(null, $request)) {
+            throw new \RuntimeException();
+        }
+
         $result = $this->sendRequest($request, self::SEND_SMS);
 
         if(!empty($result['error'])) {
             switch($result['code']) {
                 case 304:
                     $exception= new SmsException(ApiErrors::LOW_BALANCE, $result['code']);
-                    break;
-                case -1:
-                    $exception= new SmsException(ApiErrors::AUTH_ERROR, $result['code']);
                     break;
                 case 305:
                     $exception = new SmsException(ApiErrors::LOW_BALANCE, $result['code']);

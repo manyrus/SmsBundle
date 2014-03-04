@@ -22,7 +22,7 @@ class SmsException extends \Exception{
      * @param string $error
      * @param string $apiError
      */
-    function __construct($error, $apiError)
+    function __construct($error, $apiError = null)
     {
         $this->apiError = $apiError;
         $this->error = $error;

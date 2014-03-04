@@ -42,8 +42,10 @@ abstract class BaseEPochtaRepository extends BaseRepository{
         $params['key'] = $this->config->getPublicKey();
         $params['test'] = (int) $this->config->getIsTest();
         $params['sum'] = $this->generateSum($params);
-        return json_decode($this->buzz->submit(self::API_URL.$action, $params, RequestInterface::METHOD_GET)->getContent(), true);
 
+        $json = json_decode($this->buzz->submit(self::API_URL.$action, $params, RequestInterface::METHOD_GET)->getContent(), true);
+        $this->checkResponse($json);
+        return $json;
     }
 
     /**
@@ -69,6 +71,12 @@ abstract class BaseEPochtaRepository extends BaseRepository{
             return new SmsException(ApiErrors::AUTH_ERROR, $status);
         } else {
             return new SmsException(ApiErrors::UNKNOWN_ERROR, $status);
+        }
+    }
+
+    protected function checkResponse($result) {
+        if($result==null || !isset($result['result'])) {
+            throw new SmsException(ApiErrors::BAD_DATA);
         }
     }
 } 

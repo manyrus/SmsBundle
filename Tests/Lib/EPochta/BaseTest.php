@@ -3,19 +3,18 @@
  * Created by PhpStorm.
  * User: manyrus
  * Date: 04.03.14
- * Time: 6:25
+ * Time: 12:29
  */
 
 namespace Manyrus\SmsBundle\Tests\Lib\EPochta;
 
 
+use Buzz\Message\RequestInterface;
 use Manyrus\SmsBundle\Entity\SmsMessage;
-use Manyrus\SmsBundle\Lib\EPochta\BaseEPochtaRepository;
 use Manyrus\SmsBundle\Lib\EPochta\Config;
 use Manyrus\SmsBundle\Lib\EPochta\SmsRepository;
 
-class SmsRepositoryTest extends \PHPUnit_Framework_TestCase{
-
+abstract class BaseTest extends \PHPUnit_Framework_TestCase{
     /**
      * @var \Buzz\Browser
      */
@@ -42,24 +41,39 @@ class SmsRepositoryTest extends \PHPUnit_Framework_TestCase{
         $this->repo = new SmsRepository();
         $this->repo->setConfig($this->config);
         $this->repo->setBuzz($this->buzz);
-        $this->smsMessage = $this->getMock('Manyrus\SmsBundle\Entity\SmsMessage');
-    }
-
-    public function testSend() {
-        $self =$this;
+        $this->smsMessage = $this->getMockForAbstractClass('Manyrus\SmsBundle\Entity\SmsMessage');
         $this->config->setPrivateKey('manyrus');
 
+    }
+    protected function createBuzzSubmitWithReturn($return, $expect) {
+        $self = $this;
         $this->buzz->expects($this->once())
             ->method('submit')
-            ->will($this->returnCallback(function() use($self){
-                //var_dump(func_get_args());
+
+            ->will($this->returnCallback(function() use($return, $self, $expect){
+
+                $self->assertEquals($expect, func_get_args());
                 $mock = $self->getMockForAbstractClass('Buzz\Message\MessageInterface');
                 $mock->expects($self->once())
                     ->method('getContent')
-                    ->will($this->returnValue('{heelo:true}'));
+                    ->will($return);
                 return $mock;
             }));
+    }
 
-        $this->repo->send($this->smsMessage);
+    protected function getArgsSendArray() {
+        return array(
+            'http://atompark.com/api/sms/3.0/sendSMS',
+            array(
+                'sender'=>'79216778055',
+                'text' => 'hello!',
+                'phone' => '1111',
+                'version' => '3.0',
+                'action' => 'sendSMS',
+                'key' => '',
+                'test' => 0,
+                'sum' => '21281aa165ce4f984eb0a4fc33ac5b47'
+            ), RequestInterface::METHOD_GET, array()
+        );
     }
 } 
