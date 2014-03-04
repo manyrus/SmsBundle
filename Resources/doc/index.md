@@ -4,11 +4,13 @@ This bundle will help you with a sms delivering.
 In the 21 century it is a great feedback for clients.
 ## Installation
 Installation include next steps:
+
 1. Download ManyrusSmsBundle via composer
 2. Enable the Bundle
 3. Create your sms, error class
 4. Configure bundle
 5. Update your database schema
+
 ### 1. Download ManyrusSmsBundle via composer
 Add into your composer.json the next lines:
 ```js
@@ -113,11 +115,11 @@ class Error extends SmsError{
 ```
 
 ### 4. Configure bundle
-Just add in config.eml the next lines:
+Just add in config.yml the next lines:
 ``` yaml
 manyrus_sms:
   from: '79216778055'#default from message
-  api_type: sms_ru#api_type, epochta|sms_ru
+  api_type: sms_ru #api_type, epochta|sms_ru
   min_balance: 100 #event will be created, if the balance lower this value
   is_test_mode: false #set, if the api test mode
   is_queue_mode: false #put by default sms message in queue or not
@@ -126,7 +128,7 @@ manyrus_sms:
     error: Manyrus\TestBundle\Entity\Error
     sms: Manyrus\TestBundle\Entity\SmsMessage
 
-  epochta:#config for web services
+  epochta: #config for web services
     auth:
       public_key: "111"
       private_key: "111"
