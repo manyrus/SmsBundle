@@ -4,15 +4,13 @@ This bundle will help you with a sms delivering.
 In the 21 century it is a great feedback for clients.
 ## Installation
 Installation include next steps:
-1) Download ManyrusSmsBundle via composer
-2) Enable the Bundle
-3) Create your sms, error class
-4) Configure bundle
-5) Update your database schema
-
+1. Download ManyrusSmsBundle via composer
+2. Enable the Bundle
+3. Create your sms, error class
+4. Configure bundle
+5. Update your database schema
 ### 1. Download ManyrusSmsBundle via composer
 Add into your composer.json the next lines:
-
 ```js
 {
     "require": {
@@ -20,13 +18,10 @@ Add into your composer.json the next lines:
     }
 }
 ```
-
 Then tell composer to download the bundle:
-
 ``` bash
 $ php composer.phar update manyrus/sms-bundle
 ```
-
 ### 2. Enable the bundle
 Enable the bundle in the kernel:
 ``` php
@@ -41,13 +36,11 @@ public function registerBundles()
     );
 }
 ```
-
 ### 3. Create your sms, error class
 The feature of this bundle is that all sms, error objects are persisting by doctrine.
 You must create sms, error class and extends it from `Entity\SmsMessage` and `Entity\SmsError`
 #### Example, with annotations
-SmsMessage:
-
+`SmsMessage`:
 ``` php
 namespace Manyrus\TestBundle\Entity;
 
@@ -83,8 +76,7 @@ class SmsMessage extends \Manyrus\SmsBundle\Entity\SmsMessage{
 
 }
 ```
-
-Error:
+`Error`:
 ```php
 <?php
 namespace Manyrus\TestBundle\Entity;
@@ -146,9 +138,8 @@ manyrus_sms:
 
 ###5. Update your database schema
 For ORM run the following command.
-
 ``` bash
 $ php app/console doctrine:schema:update --force
 ```
 
-Congratulations!You installed the bundle!
+Congratulations! You installed the bundle!

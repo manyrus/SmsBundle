@@ -11,7 +11,6 @@ Now it support web-gates:
 **Note:** this is only beta version. Use it carefully.
 
 [![Build Status](https://travis-ci.org/manyrus/SmsBundle.png?branch=master)](https://travis-ci.org/manyrus/SmsBundle)
-
 Documentation
 -------------
 
@@ -19,7 +18,6 @@ The bulk of the documentation is stored in the `Resources/doc/index.md`
 file in this bundle:
 
 [Read the Documentation for master](https://github.com/manyrus/SmsBundle/blob/master/Resources/doc/index.md)
-
 Installation
 ------------
 
