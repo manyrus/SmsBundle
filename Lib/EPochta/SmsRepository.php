@@ -96,9 +96,6 @@ class SmsRepository extends BaseEPochtaRepository implements ISmsRepository{
                 $exception = $this->generateException($result['code']);
             }
 
-            $sms->setStatus(Status::ERROR);
-            $sms->setError($this->entityCreator->g(ApiErrors::BAD_ID));
-
             throw $exception;
         }
 
@@ -115,7 +112,7 @@ class SmsRepository extends BaseEPochtaRepository implements ISmsRepository{
             $sms->setStatus(Status::SPAM);
         } elseif($status == 'INVALID_PHONE_NUMBER') {
             $sms->setStatus(Status::ERROR);
-            $sms->setError($this->entityCreator->generateClass(ApiErrors::BAD_ADDRESSER));
+            $sms->setError($this->entityCreator->createError(ApiErrors::BAD_ADDRESSER, $sms));
         }
 
         return $sms;

@@ -35,9 +35,11 @@ class EntityCreator {
     }
 
     /**
+     * @param $errorType
+     * @param $message
      * @return SmsError
      */
-    public function createError() {
-        return new $this->errorClass();
+    public function createError($errorType=null, $message=null) {
+        return new $this->errorClass($errorType, $message);
     }
 } 

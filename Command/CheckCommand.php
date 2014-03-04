@@ -55,7 +55,7 @@ class CheckCommand extends ContainerAwareCommand{
                     $output->writeln("<info>Message #{$sms->getId()} is delivered</info>");
                     break;
                 }
-                $smsRepo->checkStatus($sms);
+                $smsRepo->updateStatus($sms);
                 if($sms->getStatus() !== Status::IN_PROCESS) {
                     $output->writeln("<info>Message #{$sms->getId()} changed status, now it {$sms->getStatus()}</info>");
                 } else {

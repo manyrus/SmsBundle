@@ -41,7 +41,7 @@ abstract class SmsMessage{
     /**
      * @var double
      *
-     * @ORM\Column(name="api_message_id", type="string")
+     * @ORM\Column(name="api_message_id", type="string", nullable=true)
      */
     private $messageId;
 

@@ -10,6 +10,7 @@
 
         <service id="kernel.subscriber.db_sms_subscriber" class="Manyrus\SmsBundle\Lib\Event\DBSmsSubscriber">
             <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument type="service" id="manyrus.sms_bundle.entity_creator"/>
             <tag name="kernel.event_subscriber"/>
         </service>
 

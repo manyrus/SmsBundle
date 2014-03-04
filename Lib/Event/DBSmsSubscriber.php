@@ -10,6 +10,7 @@ namespace Manyrus\SmsBundle\Lib\Event;
 
 
 use Doctrine\ORM\EntityManager;
+use Manyrus\SmsBundle\Lib\EntityCreator;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class DBSmsSubscriber implements EventSubscriberInterface{
@@ -20,12 +21,17 @@ class DBSmsSubscriber implements EventSubscriberInterface{
      */
     private $manager;
 
-
+    /**
+     * @var EntityCreator
+     */
+    private $creator;
     /**
      * @param \Doctrine\ORM\EntityManager $manager
+     * @param \Manyrus\SmsBundle\Lib\EntityCreator $creator
      */
-    public function __construct(EntityManager $manager) {
+    public function __construct(EntityManager $manager, EntityCreator $creator) {
         $this->manager = $manager;
+        $this->creator = $creator;
     }
 
     /**
@@ -36,6 +42,14 @@ class DBSmsSubscriber implements EventSubscriberInterface{
         $this->manager->flush();
     }
 
+    public function errorSend(SmsEvent $event) {
+        $exception = $event->getException();
+
+        $error = $this->creator->createError($exception->getApiError(), $event->getMessage());
+        $event->getMessage()->setError($error);
+
+        $this->flush($event);
+    }
     /**
      * Returns an array of event names this subscriber wants to listen to.
      *
@@ -60,7 +74,7 @@ class DBSmsSubscriber implements EventSubscriberInterface{
     {
         return array(
             SmsEvents::POST_SEND => 'flush',
-            SmsEvents::ERROR_SEND => 'flush',
+            SmsEvents::ERROR_SEND => 'errorSend',
             SmsEvents::SMS_CHANGED=>'flush'
         );
     }
