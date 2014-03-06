@@ -23,6 +23,11 @@
                  parent="manyrus.sms_bundle.epochta.base_repository"
                  public="true"/>
 
+        <service id="manyrus.sms_bundle.epochta.client_repository"
+                 class="Manyrus\SmsBundle\Lib\EPochta\ClientRepository"
+                 parent="manyrus.sms_bundle.epochta.base_repository"
+                 public="true"/>
+
     </services>
 
 

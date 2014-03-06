@@ -14,6 +14,9 @@
 
         <service id="manyrus.sms_bundle.decorated.sms_repository"
                  alias="manyrus.sms_bundle.decorated.epochta.sms_repository"/>
+
+        <service id="manyrus.sms_bundle.client_repository"
+                 alias="manyrus.sms_bundle.epochta.client_repository"/>
     </services>
 
 

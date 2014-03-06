@@ -62,6 +62,15 @@ class EventDispatcherMock {
         ;
     }
 
+    public function preSendEvent($expects) {
+        $this->sendEvent($expects, SmsEvents::PRE_SEND);
+
+    }
+
+    public function postSendEvent($expects) {
+        $this->sendEvent($expects, SmsEvents::POST_SEND);
+    }
+
     private function sendEvent($expects, $with) {
         $sms = $this->test->smsMessage;
         $self = $this->test;
@@ -77,14 +86,7 @@ class EventDispatcherMock {
         ;
     }
 
-    public function preSendEvent($expects) {
-        $this->sendEvent($expects, SmsEvents::PRE_SEND);
 
-    }
-
-    public function postSendEvent($expects) {
-        $this->sendEvent($expects, SmsEvents::POST_SEND);
-    }
 
     public function errorEvent($expects) {
         $self = $this->test;

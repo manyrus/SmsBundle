@@ -62,21 +62,15 @@ abstract class BaseEPochtaRepository extends BaseRepository{
         return md5($sum.$this->config->getPrivateKey());
     }
 
-    /**
-     * @param $status
-     * @return SmsException
-     */
-    protected function generateException($status) {
-        if($status == -1) {
-            return new SmsException(ApiErrors::AUTH_ERROR, $status);
-        } else {
-            return new SmsException(ApiErrors::UNKNOWN_ERROR, $status);
-        }
-    }
+
 
     protected function checkResponse($result) {
         if($result==null || !isset($result['result'])) {
             throw new SmsException(ApiErrors::BAD_DATA);
+        }
+
+        if(isset($result['code']) && $result['code'] == -1) {
+            throw new SmsException(ApiErrors::AUTH_ERROR);
         }
     }
 } 

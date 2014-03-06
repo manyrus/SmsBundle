@@ -12,8 +12,8 @@ namespace Manyrus\SmsBundle\Lib\EPochta;
 use Manyrus\SmsBundle\Lib\Base\BaseConfig;
 
 class Config extends BaseConfig{
-    private $publicKey = '';
-    private $privateKey = '';
+    private $publicKey;
+    private $privateKey;
 
     /**
      * @param string $privateKey

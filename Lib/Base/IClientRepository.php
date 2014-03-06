@@ -9,10 +9,13 @@
 namespace Manyrus\SmsBundle\Lib\Base;
 
 
+use Manyrus\SmsBundle\Entity\Client;
+
 interface IClientRepository {
     /**
      * Get current balance
-     * @return float
+     * @param \Manyrus\SmsBundle\Entity\Client $c
+     * @return \Manyrus\SmsBundle\Entity\Client
      */
-    public function getBalance();
+    public function updateBalance(Client $c);
 } 

@@ -15,6 +15,7 @@ use Manyrus\SmsBundle\Lib\ApiErrors;
 use Manyrus\SmsBundle\Lib\EntityCreator;
 use Manyrus\SmsBundle\Lib\Event\DBSmsSubscriber;
 use Manyrus\SmsBundle\Lib\Event\SmsEvent;
+use Manyrus\SmsBundle\Lib\Event\SmsEvents;
 use Manyrus\SmsBundle\Lib\SmsException;
 
 class DBSmsSubscriberTest extends \PHPUnit_Framework_TestCase{
@@ -81,5 +82,11 @@ class DBSmsSubscriberTest extends \PHPUnit_Framework_TestCase{
 
         $this->manager->expects($this->at(1))
             ->method('flush');
+    }
+
+    public function testGetSubscribedEvents() {
+        $this->assertArrayHasKey(SmsEvents::POST_SEND, $this->subscriber->getSubscribedEvents());
+        $this->assertArrayHasKey(SmsEvents::ERROR_SEND, $this->subscriber->getSubscribedEvents());
+        $this->assertArrayHasKey(SmsEvents::SMS_CHANGED, $this->subscriber->getSubscribedEvents());
     }
 } 

@@ -13,6 +13,7 @@ use Manyrus\SmsBundle\Entity\SmsMessage;
 use Manyrus\SmsBundle\Lib\ApiType;
 use Manyrus\SmsBundle\Lib\Base\BaseConfig;
 use Manyrus\SmsBundle\Lib\Event\MergeEvent;
+use Manyrus\SmsBundle\Lib\Event\MergeEvents;
 use Manyrus\SmsBundle\Lib\Event\MergerSubscriber;
 
 class MergerSubscriberTest extends \PHPUnit_Framework_TestCase{
@@ -57,5 +58,9 @@ class MergerSubscriberTest extends \PHPUnit_Framework_TestCase{
 
         $this->assertEquals($num, $this->smsMessage->getFrom());
         $this->assertEquals(self::API_TYPE, $this->smsMessage->getApiType());
+    }
+
+    public function testGetSubscribedEvents() {
+        $this->assertArrayHasKey(MergeEvents::ON_MERGE, $this->mergerSubscriber->getSubscribedEvents());
     }
 } 
