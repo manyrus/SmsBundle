@@ -21,7 +21,11 @@
         <service id="manyrus.sms_bundle.epochta.sms_repository"
                  class="Manyrus\SmsBundle\Lib\EPochta\SmsRepository"
                  parent="manyrus.sms_bundle.epochta.base_repository"
-                 public="true"/>
+                 public="true">
+            <call method="setEntityCreator">
+                <argument type="service" id="manyrus.sms_bundle.entity_creator"/>
+            </call>
+        </service>
 
         <service id="manyrus.sms_bundle.epochta.client_repository"
                  class="Manyrus\SmsBundle\Lib\EPochta\ClientRepository"

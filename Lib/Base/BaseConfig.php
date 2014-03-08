@@ -11,7 +11,7 @@ namespace Manyrus\SmsBundle\Lib\Base;
 
 abstract class BaseConfig {
     private $from;
-    private $isTest;
+    private $isTest = false;
 
     /**
      * @param mixed $from

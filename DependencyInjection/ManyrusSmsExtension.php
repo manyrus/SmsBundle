@@ -33,10 +33,10 @@ class ManyrusSmsExtension extends Extension implements PrependExtensionInterface
     private function loadConfig($config, ContainerBuilder $container, $root) {
 
         foreach($config as $key=>$value) {
-            if(is_array($value)) {
-                $this->loadConfig($config[$key], $container, $root.'.'.$key);
+            if (is_array($value)) {
+                $this->loadConfig($config[$key], $container, $root . '.' . $key);
             } else {
-                $container->setParameter($root.'.'.$key, $value);
+                $container->setParameter($root . '.' . $key, $value);
             }
 
         }
@@ -57,6 +57,7 @@ class ManyrusSmsExtension extends Extension implements PrependExtensionInterface
             $builder->prependExtensionConfig('doctrine', $doctrineConfig);
 
         }
+
         $buzzConfig = array('client_timeout'=>60);
         $builder->prependExtensionConfig('sensio_buzz', $buzzConfig);
     }
@@ -74,7 +75,6 @@ class ManyrusSmsExtension extends Extension implements PrependExtensionInterface
             'decorator.xml',
             'repositories.xml'
         );
-
         foreach($providers as $provider) {
 
             foreach($to_load as $file) {

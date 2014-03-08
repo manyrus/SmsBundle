@@ -33,6 +33,14 @@ class SmsRepository extends BaseEPochtaRepository implements ISmsRepository{
      */
     private $entityCreator;
 
+    /**
+     * @param \Manyrus\SmsBundle\Lib\EntityCreator $entityCreator
+     */
+    public function setEntityCreator($entityCreator)
+    {
+        $this->entityCreator = $entityCreator;
+    }
+
 
     /**
      * @param SmsMessage $sms
@@ -90,12 +98,9 @@ class SmsRepository extends BaseEPochtaRepository implements ISmsRepository{
 
         if(!empty($result['error'])){
             if($result['error'] == 'error_invalid_id') {
-                $exception = new SmsException(ApiErrors::BAD_ID, $result['code']);
-            } else {
-                $exception = $this->generateException($result['code']);
+                throw new SmsException(ApiErrors::BAD_ID, $result['code']);
             }
-
-            throw $exception;
+            throw new SmsException(ApiErrors::UNKNOWN_ERROR, $result['code']);
         }
 
         $status = $result['result']['status'][0];
@@ -132,14 +137,13 @@ class SmsRepository extends BaseEPochtaRepository implements ISmsRepository{
 
         $result = $this->sendRequest($request, self::GET_PRICE);
 
-        if(!empty($result['error'])) {
-            throw $this->generateException($result['code']);
-        }
-
         $message->setCost($result['result']['price']);
 
         return $message;
     }
+
+
+
 
     /**
      * @see Manyrus\SmsBundle\Lib\ApiType

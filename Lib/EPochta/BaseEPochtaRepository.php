@@ -65,7 +65,7 @@ abstract class BaseEPochtaRepository extends BaseRepository{
 
 
     protected function checkResponse($result) {
-        if($result==null || !isset($result['result'])) {
+        if($result===null || !isset($result['result'])) {
             throw new SmsException(ApiErrors::BAD_DATA);
         }
 

@@ -22,12 +22,14 @@ class BaseConfigTest extends \PHPUnit_Framework_TestCase{
     }
 
     public function testFrom() {
+        $this->assertNull($this->config->getFrom());
         $from = '79216778055';
         $this->config->setFrom($from);
         $this->assertEquals($from, $this->config->getFrom());
     }
 
     public function testIsTest() {
+        $this->assertFalse($this->config->getIsTest());
         $this->config->setIsTest(true);
         $this->assertTrue($this->config->getIsTest());
     }

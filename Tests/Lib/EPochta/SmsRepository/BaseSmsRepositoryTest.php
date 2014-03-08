@@ -25,7 +25,7 @@ abstract class BaseSmsRepositoryRepositoryTest extends BaseRepositoryTest{
      */
     protected $repo;
 
-    public function setUp() {
+    protected  function setUp() {
         parent::setUp();
 
         $this->repo = new SmsRepository();

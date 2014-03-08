@@ -192,7 +192,7 @@ abstract class SmsMessage{
     }
 
     /**
-     * @return mixed
+     * @return SmsError
      */
     public function getError()
     {
